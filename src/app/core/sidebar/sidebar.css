@@ -1,0 +1,49 @@
+.sidebar-container {
+  height: 100%; /* Ocupa toda la altura del layout */
+  display: flex;
+  flex-direction: column;
+}
+
+h3 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li a {
+  display: flex; /* Para alinear ícono y texto */
+  align-items: center;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #555;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav ul li a:hover {
+  background-color: #e9ecef; /* Gris claro al pasar el mouse */
+  color: #007bff;
+}
+
+/* Estilo para el enlace ACTIVO */
+nav ul li a.active-link {
+  background-color: #007bff; /* Azul */
+  color: white;
+  font-weight: 600;
+}
+
+/* (Opcional) Estilos para íconos si los añades */
+nav ul li a i {
+  margin-right: 10px; /* Espacio entre ícono y texto */
+  width: 20px; /* Ancho fijo para alineación */
+  text-align: center;
+}

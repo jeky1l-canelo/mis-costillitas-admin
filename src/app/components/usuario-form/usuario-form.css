@@ -1,0 +1,109 @@
+/* src/app/components/usuario-form/usuario-form.css */
+
+/* Contenedor del formulario (puedes ajustar padding, etc.) */
+.usuario-form-container {
+  padding: 25px;
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif; /* Asegura la fuente correcta */
+}
+
+h3 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* Estructura para cada campo (label + input/select) */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+/* Estilo para las etiquetas */
+.form-group label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+  color: #495057;
+  font-size: 0.9em;
+}
+
+/* Estilo para los "casilleros" (campos input y select) */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ced4da; /* Borde gris claro */
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: inherit; /* Hereda la fuente del contenedor */
+  line-height: 1.5;
+  background-color: #fff;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Efecto al hacer clic en un campo */
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #80bdff; /* Borde azul */
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Brillo azul */
+}
+
+/* Estilo para mensajes de error debajo de los campos */
+.error {
+  color: #dc3545;
+  font-size: 0.8em;
+  margin-top: 4px;
+}
+
+/* Mensaje de error general del backend */
+.error-backend {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 12px 15px;
+  margin-top: 1rem; /* Espacio arriba */
+  margin-bottom: 1rem; /* Espacio abajo */
+  border: 1px solid transparent;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Contenedor y estilos para los botones */
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.form-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: inherit; /* Hereda la fuente */
+}
+
+/* Reutiliza las clases globales si quieres o define btn-save/btn-cancel aquí */
+.btn-save {
+  background-color: #28a745; /* Verde */
+  color: white;
+}
+.btn-save:hover { background-color: #218838; }
+.btn-save:disabled { background-color: #a3d9b1; cursor: not-allowed; }
+
+.btn-cancel {
+  background-color: #6c757d; /* Gris */
+  color: white;
+}
+.btn-cancel:hover { background-color: #5a6268; }

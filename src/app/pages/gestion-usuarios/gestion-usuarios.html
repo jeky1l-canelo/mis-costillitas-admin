@@ -1,0 +1,67 @@
+<div class="gestion-usuarios-container">
+  <h2>Gestionar Personal</h2>
+  <!-- {/* Mensajes de éxito/error para borrado */} -->
+<div *ngIf="deleteSuccessMessage" class="success-backend">{{ deleteSuccessMessage }}</div>
+  <div *ngIf="deleteErrorMessage" class="error-backend">{{ deleteErrorMessage }}</div>
+  <div *ngIf="generalSuccessMessage" class="success-backend">
+    {{ generalSuccessMessage }}
+  </div>
+<button class="btn-crear" (click)="openCreateForm()" *ngIf="!showForm">
+    + Crear Nuevo Usuario
+  </button>
+  <!-- FORMULARIO SE MUESTRA  -->
+   <div *ngIf="showForm">
+    <app-usuario-form
+      [userIdToEdit]="userIdToEdit"   
+      (formSaved)="handleFormSaved()"    
+      (formCancelled)="handleFormCancelled()">
+    </app-usuario-form>
+  </div>
+  <!-- Mensaje de Cargando... -->
+  <div *ngIf="isLoading" class="loading">
+    Cargando usuarios... ⏳
+  </div>
+
+  <!-- Mensaje de Error -->
+  <div *ngIf="errorMessage" class="error-backend">
+    {{ errorMessage }}
+  </div>
+  <!-- {/* --- Tabla de Usuarios (se oculta si el form está abierto) --- */} -->
+<div *ngIf="!showForm">  
+  <!-- Tabla de Usuarios (si no está cargando y no hay error) -->
+  <table *ngIf="!isLoading && !errorMessage && usuarios.length > 0" class="tabla-usuarios">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Nombre Completo</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- {/* Usamos *ngFor para repetir por cada usuario */} -->
+      <tr *ngFor="let usuario of usuarios">
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.username }}</td>
+        <td>{{ usuario.nombre }}</td>
+        <td>{{ usuario.email }}</td>
+        <td>{{ usuario.rolNombre }}</td>
+        <td>
+          <!-- {/* Botones de Editar/Borrar (los conectaremos después) */} -->
+          <button class="btn-editar">Editar</button>
+<button class="btn-borrar" (click)="borrarUsuario(usuario.id, usuario.nombre)">
+            Borrar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  <!-- {/* Mensaje si no hay usuarios */} -->
+  <div *ngIf="!isLoading && !errorMessage && usuarios.length === 0" class="no-data">
+    No hay usuarios registrados.
+  </div>
+
+</div>

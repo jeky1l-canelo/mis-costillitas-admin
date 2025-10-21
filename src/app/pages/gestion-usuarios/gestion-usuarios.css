@@ -1,0 +1,83 @@
+.gestion-usuarios-container {
+  max-width: 1000px; /* Ancho máximo para la tabla */
+  margin: 20px auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.tabla-usuarios {
+  width: 100%;
+  border-collapse: collapse; /* Une los bordes */
+  margin-top: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tabla-usuarios th, .tabla-usuarios td {
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.tabla-usuarios thead {
+  background-color: #f2f2f2; /* Fondo gris claro para cabecera */
+}
+
+.tabla-usuarios th {
+  font-weight: 600;
+}
+
+.tabla-usuarios tbody tr:nth-child(even) {
+  background-color: #f9f9f9; /* Rayas de cebra */
+}
+
+.tabla-usuarios tbody tr:hover {
+  background-color: #f1f1f1; /* Resaltado al pasar el mouse */
+}
+
+.tabla-usuarios td button {
+  margin-right: 5px;
+  padding: 5px 8px;
+  font-size: 0.9em;
+  cursor: pointer;
+  border-radius: 3px;
+  border: none;
+  color: white;
+}
+
+.btn-editar {
+  background-color: #ffc107; /* Amarillo */
+}
+.btn-editar:hover {
+  background-color: #e0a800;
+}
+
+.btn-borrar {
+  background-color: #dc3545; /* Rojo */
+}
+.btn-borrar:hover {
+  background-color: #c82333;
+}
+
+.loading, .no-data {
+  text-align: center;
+  margin-top: 30px;
+  color: #666;
+}
+.btn-crear {
+  color: #ffffff; /* Texto verde oscuro */
+  background-color: #3a7848; /* Fondo verde muy claro */
+  border: 1px solid #c3e6cb; /* Borde verde claro */
+  padding: 15px; /* Espaciado interno generoso */
+  border-radius: 5px; /* Bordes redondeados */
+  margin-top: 15px; /* Espacio arriba */
+  margin-bottom: 20px; /* Espacio abajo */
+  text-align: center; /* Texto centrado */
+  font-weight: 500; /* Un poco más de peso */
+  font-size: 0.9em; /* Ligeramente más pequeño */
+}
+.btn-crear:hover {
+  background-color: #98e2a9; /* Fondo verde claro al pasar el mouse */
+}
