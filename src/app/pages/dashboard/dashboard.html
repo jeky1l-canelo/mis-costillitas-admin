@@ -1,1 +1,138 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  
+  <div class="dashboard-header">
+    <div>
+      <h2>📊 Panel de Control</h2>
+      <p class="welcome-text">Bienvenido, <strong>{{ authService.currentUserSignal() }}</strong></p>
+    </div>
+    
+    <!-- Botón de Reporte (Solo Admin/Encargado) -->
+    <button *ngIf="canDownloadReport()" (click)="generarReportePDF()" class="btn-reporte">
+      📄 Descargar Reporte PDF
+    </button>
+  </div>
+
+  <!-- SECCIÓN 1: TARJETAS DE RESUMEN -->
+  <div class="stats-grid">
+    
+    <!-- Tarjeta 1: Reservas de Hoy -->
+    <div class="stat-card card-today">
+      <div class="icon">🔥</div>
+      <div class="info">
+        <h3>Reservas Hoy</h3>
+        <p class="number">{{ reservasHoy }}</p>
+        <small>Para atender hoy</small>
+      </div>
+    </div>
+
+    <!-- Tarjeta 2: Total Activas -->
+    <div class="stat-card">
+      <div class="icon">✅</div>
+      <div class="info">
+        <h3>Confirmadas</h3>
+        <p class="number">{{ reservasConfirmadas }}</p>
+        <small>Reservas activas</small>
+      </div>
+    </div>
+
+    <!-- Tarjeta 3: Canceladas -->
+    <div class="stat-card">
+      <div class="icon">❌</div>
+      <div class="info">
+        <h3>Canceladas</h3>
+        <p class="number">{{ reservasCanceladas }}</p>
+        <small>Total histórico</small>
+      </div>
+    </div>
+
+    <!-- Tarjeta 4: Usuarios -->
+    <div class="stat-card card-users" *ngIf="isAdmin()">
+      <div class="icon">👥</div>
+      <div class="info">
+        <h3>Usuarios</h3>
+        <p class="number">{{ totalUsuarios }}</p>
+        <small>Empleados registrados</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: GRÁFICOS VISUALES (¡NUEVO!) -->
+  <div class="charts-section" *ngIf="totalReservas > 0">
+    
+    <!-- Gráfico 1: Distribución (Circular) -->
+    <div class="chart-card">
+      <h3>Resumen de Estado</h3>
+      <div class="pie-chart-container">
+        <div class="pie-chart" 
+             [style.background]="'conic-gradient(#28a745 0% ' + pctConfirmadas + '%, #dc3545 ' + pctConfirmadas + '% 100%)'">
+          <div class="pie-center">
+            <span>{{ totalReservas }}</span>
+            <small>Total</small>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <div class="legend-item"><span class="dot green"></span> {{ pctConfirmadas | number:'1.0-0' }}% Confirmadas</div>
+          <div class="legend-item"><span class="dot red"></span> {{ pctCanceladas | number:'1.0-0' }}% Canceladas</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gráfico 2: Barras de Progreso -->
+    <div class="chart-card">
+      <h3>Métricas Clave</h3>
+      <div class="progress-bars">
+        
+        <div class="progress-group">
+          <div class="progress-label">
+            <span>Tasa de Confirmación</span>
+            <strong>{{ pctConfirmadas | number:'1.0-0' }}%</strong>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill green" [style.width.%]="pctConfirmadas"></div>
+          </div>
+        </div>
+
+        <div class="progress-group">
+          <div class="progress-label">
+            <span>Tasa de Cancelación</span>
+            <strong>{{ pctCanceladas | number:'1.0-0' }}%</strong>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill red" [style.width.%]="pctCanceladas"></div>
+          </div>
+        </div>
+
+        <div class="progress-group">
+          <div class="progress-label">
+            <span>Reservas de Hoy (vs Total)</span>
+            <strong>{{ reservasHoy }} de {{ totalReservas }}</strong>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill yellow" [style.width.%]="(reservasHoy / totalReservas) * 100"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3: ACCESOS RÁPIDOS -->
+  <div class="quick-actions">
+    <h3>Accesos Rápidos</h3>
+    <div class="actions-grid">
+      <a routerLink="/admin/reservas" class="action-btn">
+        <span class="btn-icon">📅</span> Ir a Gestión de Reservas &rarr;
+      </a>
+      <a routerLink="/admin/reserva-manual" class="action-btn">
+        <span class="btn-icon">📞</span> Nueva Reserva Manual &rarr;
+      </a>
+      <a *ngIf="isAdmin()" routerLink="/admin/platos" class="action-btn">
+        <span class="btn-icon">🍽️</span> Editar Menú &rarr;
+      </a>
+      <a routerLink="/admin/mesas" class="action-btn">
+        <span class="btn-icon">🪑</span> Ver Mesas &rarr;
+      </a>
+    </div>
+  </div>
+
+</div>

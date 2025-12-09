@@ -1,0 +1,176 @@
+.dashboard-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dashboard-header h2 { margin: 0; color: #333; }
+.welcome-text { color: #666; margin: 0.5rem 0 0 0; }
+
+/* Botón Reporte */
+.btn-reporte {
+  background-color: #c0392b;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(192, 57, 43, 0.3);
+  transition: all 0.3s ease;
+}
+.btn-reporte:hover {
+  background-color: #a93226;
+  transform: translateY(-2px);
+}
+
+/* --- 1. TARJETAS DE ESTADÍSTICAS --- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.2s;
+  border: 1px solid #f0f0f0;
+}
+
+.stat-card:hover { transform: translateY(-5px); }
+
+.icon {
+  font-size: 2rem;
+  width: 60px; height: 60px;
+  background-color: #f8f9fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-today .icon { background-color: #fff3cd; } 
+.card-users .icon { background-color: #e7f1ff; }
+
+.info h3 { margin: 0; font-size: 0.9rem; color: #777; font-weight: 600; text-transform: uppercase; }
+.info .number { margin: 0.2rem 0; font-size: 1.8rem; font-weight: 800; color: #333; }
+.info small { font-size: 0.8rem; color: #999; }
+
+
+/* --- 2. GRÁFICOS (CHARTS) --- */
+.charts-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.chart-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  border: 1px solid #f0f0f0;
+}
+
+.chart-card h3 { margin-top: 0; color: #444; margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;}
+
+/* Gráfico Circular (Pie Chart CSS) */
+.pie-chart-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.pie-chart {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* El gradiente se inyecta desde el HTML */
+}
+
+.pie-center {
+  width: 110px;
+  height: 110px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
+.pie-center span { font-size: 1.5rem; font-weight: bold; color: #333; }
+.pie-center small { font-size: 0.8rem; color: #888; }
+
+.chart-legend { display: flex; flex-direction: column; gap: 0.5rem; }
+.legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: #555; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot.green { background-color: #28a745; }
+.dot.red { background-color: #dc3545; }
+
+/* Barras de Progreso */
+.progress-group { margin-bottom: 1.2rem; }
+.progress-label { display: flex; justify-content: space-between; margin-bottom: 0.3rem; font-size: 0.9rem; color: #555; }
+.progress-track { width: 100%; height: 10px; background-color: #e9ecef; border-radius: 5px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 5px; transition: width 1s ease-out; }
+.progress-fill.green { background-color: #28a745; }
+.progress-fill.red { background-color: #dc3545; }
+.progress-fill.yellow { background-color: #ffc107; }
+
+
+/* --- 3. ACCESOS RÁPIDOS --- */
+.quick-actions h3 { color: #444; margin-bottom: 1rem; }
+
+.actions-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 1.2rem 1.5rem;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #555;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.btn-icon { font-size: 1.2rem; }
+
+.action-btn:hover {
+  border-color: #c0392b;
+  color: #c0392b;
+  background-color: #fff5f5;
+  transform: translateY(-2px);
+}

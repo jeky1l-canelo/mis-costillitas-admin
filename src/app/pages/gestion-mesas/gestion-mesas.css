@@ -1,0 +1,141 @@
+.gestion-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  font-family: 'Poppins', sans-serif;
+}
+
+h2 {
+  color: #333;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Formulario Inline (Más compacto) */
+.form-panel {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid #e9ecef;
+}
+
+.form-panel h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #c0392b;
+  margin-bottom: 1rem;
+}
+
+.form-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end; /* Alinea los inputs con los botones */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #555;
+}
+
+.form-group input, .form-group select {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.small { width: 80px; }
+.medium { width: 150px; }
+
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Botones */
+.btn-crear {
+  background-color: #28a745; /* Verde para crear */
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-crear:hover { background-color: #218838; }
+
+.btn-cancel {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Tabla */
+.tabla-admin {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-admin th {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  text-align: left;
+  color: #555;
+}
+
+.tabla-admin td {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.numero-badge {
+  background-color: #333;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.estado-badge.ok { color: #28a745; font-weight: 600; }
+.estado-badge.warn { color: #ffc107; font-weight: 600; }
+
+/* Mensajes */
+.success-backend {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+.error-backend {
+  background-color: #f8d7da;
+  color: #842029;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+/* Acciones */
+.acciones-cell { display: flex; gap: 5px; }
+.btn-icon {
+  width: 30px; height: 30px;
+  border-radius: 50%; border: 1px solid #eee;
+  background: white; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.btn-icon:hover { background-color: #eee; }

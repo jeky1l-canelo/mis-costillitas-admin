@@ -1,83 +1,169 @@
+/* Contenedor Principal */
 .gestion-usuarios-container {
-  max-width: 1000px; /* Ancho máximo para la tabla */
-  margin: 20px auto;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  font-family: 'Poppins', sans-serif; /* Asegurando la fuente bonita */
 }
 
 h2 {
-  text-align: center;
-  margin-bottom: 20px;
+  color: #333;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* --- Barra de Acciones (Botón Crear) --- */
+.actions-bar {
+  display: flex;
+  justify-content: flex-end; /* Botón a la derecha */
+  margin-bottom: 1.5rem;
+}
+
+.btn-crear {
+  background-color: #c0392b; /* Rojo marca */
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px; /* Pill shape */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(192, 57, 43, 0.3);
+}
+
+.btn-crear:hover {
+  background-color: #a93226; /* Rojo más oscuro */
+  transform: translateY(-2px);
+}
+
+/* --- Contenedor del Formulario (Cuando se abre) --- */
+.form-wrapper {
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid #eee;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Tabla de Usuarios --- */
+.table-responsive {
+  overflow-x: auto; /* Scroll horizontal en móviles */
 }
 
 .tabla-usuarios {
   width: 100%;
-  border-collapse: collapse; /* Une los bordes */
-  margin-top: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+  min-width: 600px; /* Ancho mínimo para que no se rompa */
 }
 
-.tabla-usuarios th, .tabla-usuarios td {
-  border: 1px solid #ddd;
-  padding: 10px 12px;
+.tabla-usuarios th,
+.tabla-usuarios td {
+  padding: 1rem;
   text-align: left;
-}
-
-.tabla-usuarios thead {
-  background-color: #f2f2f2; /* Fondo gris claro para cabecera */
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
 }
 
 .tabla-usuarios th {
+  background-color: #f8f9fa;
+  color: #555;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.tabla-usuarios tr:hover {
+  background-color: #fffdfd; /* Un rojo muuuuy clarito o blanco al pasar el mouse */
+}
+
+/* Estilo para el email pequeño */
+.tabla-usuarios small {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+/* --- Badges para Roles --- */
+.badge-rol {
+  display: inline-block;
+  padding: 0.35rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
   font-weight: 600;
+  background-color: #e9ecef; /* Gris por defecto */
+  color: #495057;
+  letter-spacing: 0.5px;
 }
 
-.tabla-usuarios tbody tr:nth-child(even) {
-  background-color: #f9f9f9; /* Rayas de cebra */
+/* (Opcional) Si quisieras colores por rol, podrías usar ngClass en el HTML 
+   y definir .badge-admin, .badge-personal aquí */
+
+/* --- Botones de Acción (Editar/Borrar) --- */
+.acciones-cell {
+  display: flex;
+  gap: 0.8rem;
 }
 
-.tabla-usuarios tbody tr:hover {
-  background-color: #f1f1f1; /* Resaltado al pasar el mouse */
-}
-
-.tabla-usuarios td button {
-  margin-right: 5px;
-  padding: 5px 8px;
-  font-size: 0.9em;
-  cursor: pointer;
-  border-radius: 3px;
+.btn-icon {
+  background: none;
   border: none;
-  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: background-color 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
 }
 
-.btn-editar {
-  background-color: #ffc107; /* Amarillo */
-}
 .btn-editar:hover {
-  background-color: #e0a800;
+  background-color: #fff3cd; /* Fondo amarillo suave */
+  transform: scale(1.1);
 }
 
-.btn-borrar {
-  background-color: #dc3545; /* Rojo */
-}
 .btn-borrar:hover {
-  background-color: #c82333;
+  background-color: #f8d7da; /* Fondo rojo suave */
+  transform: scale(1.1);
 }
 
-.loading, .no-data {
+/* --- Mensajes y Loading --- */
+.loading {
   text-align: center;
-  margin-top: 30px;
-  color: #666;
+  padding: 3rem;
+  color: #999;
+  font-style: italic;
 }
-.btn-crear {
-  color: #ffffff; /* Texto verde oscuro */
-  background-color: #3a7848; /* Fondo verde muy claro */
-  border: 1px solid #c3e6cb; /* Borde verde claro */
-  padding: 15px; /* Espaciado interno generoso */
-  border-radius: 5px; /* Bordes redondeados */
-  margin-top: 15px; /* Espacio arriba */
-  margin-bottom: 20px; /* Espacio abajo */
-  text-align: center; /* Texto centrado */
-  font-weight: 500; /* Un poco más de peso */
-  font-size: 0.9em; /* Ligeramente más pequeño */
+
+.success-backend, .error-backend {
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
 }
-.btn-crear:hover {
-  background-color: #98e2a9; /* Fondo verde claro al pasar el mouse */
+
+.success-backend {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
+}
+
+.error-backend {
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c6cb;
 }

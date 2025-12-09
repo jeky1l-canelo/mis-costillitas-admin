@@ -1,6 +1,14 @@
-<div class="admin-layout">
-  <app-sidebar class="sidebar"></app-sidebar>
-  <main class="content">
-    <router-outlet></router-outlet>
-  </main>
+<div class="app-layout">
+  
+  <!-- 1. El Sidebar (Izquierda) -->
+  <app-sidebar class="layout-sidebar"></app-sidebar>
+
+  <!-- 2. El Contenido Principal (Derecha) -->
+  <div class="layout-content">
+    
+    <!-- Aquí se cargan las páginas hijas (Dashboard, Usuarios, Platos) -->
+    <router-outlet></router-outlet> 
+
+  </div>
+
 </div>

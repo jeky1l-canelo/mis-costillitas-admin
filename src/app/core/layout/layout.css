@@ -1,3 +1,16 @@
-.admin-layout { display: flex; height: 100vh; }
-.sidebar { width: 250px; background-color: #f4f4f4; padding: 20px; flex-shrink: 0; }
-.content { flex-grow: 1; padding: 20px; overflow-y: auto; }
+.app-layout {
+  display: flex;
+  height: 100vh;
+}
+
+.layout-sidebar {
+  width: 250px; /* Mismo ancho que definimos en sidebar.css */
+  flex-shrink: 0;
+}
+
+.layout-content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto; /* Scroll para el contenido */
+  background-color: #f8f9fa; /* Fondo grisecito para el panel */
+}

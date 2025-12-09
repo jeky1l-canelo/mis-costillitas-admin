@@ -1,0 +1,162 @@
+/* 1. El Contenedor Principal (Fondo de la página) */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+  background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); /* Fondo sutil */
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 2. La Tarjeta del Formulario */
+form {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* Sombra suave */
+  width: 100%;
+  max-width: 400px; /* Que no sea gigante en escritorio */
+  border: 1px solid #f0f0f0;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 3. Título */
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* 4. Grupos de Inputs */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Estilo de los campos de texto */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #fafafa;
+  box-sizing: border-box; /* Importante para que el padding no rompa el ancho */
+}
+
+/* Efecto al hacer clic en el input */
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: #ff6b6b; /* Color temático (Naranja/Rojo) */
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+}
+
+/* 5. Mensajes de Error (Validaciones) */
+.error {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.error::before {
+  content: "⚠️ ";
+  margin-right: 4px;
+}
+
+/* Mensaje de error general del backend */
+.error-backend {
+  background-color: #fdecea;
+  color: #c0392b;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  border: 1px solid #fadbd8;
+  font-size: 0.9rem;
+}
+
+/* 6. Botón Principal */
+button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(to right, #ff6b6b, #ee5253); /* Degradado bonito */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 10px;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-2px); /* Efecto de elevación */
+  box-shadow: 0 5px 15px rgba(238, 82, 83, 0.3);
+}
+
+button[type="submit"]:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Botón deshabilitado */
+button[type="submit"]:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* 7. Link de Registro */
+.register-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.register-link a {
+  color: #ff6b6b;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.register-link a:hover {
+  color: #ee5253;
+  text-decoration: underline;
+}
+
+/* Responsive para móviles */
+@media (max-width: 480px) {
+  form {
+    padding: 1.5rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+}

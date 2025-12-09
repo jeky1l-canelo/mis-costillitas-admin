@@ -1,90 +1,106 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core'; // Import necessary decorators/interfaces
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { UsuarioService } from '../../services/usuario'; // Or usuario
-// import { UsuarioRequest } from '../../dto/usuario-request'; // Optional DTO
+import { UsuarioService } from '../../services/usuario'; 
 
 @Component({
   selector: 'app-usuario-form',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './usuario-form.html',
+  templateUrl: './usuario-form.html', // Asegúrate que el nombre coincida
   styleUrl: './usuario-form.css'
 })
-export class UsuarioFormComponent implements OnInit { // Implement OnInit
+export class UsuarioFormComponent implements OnInit {
 
-  // --- Inputs/Outputs (for potential editing later) ---
-  @Input() userIdToEdit: number | null = null; // Receive ID if editing
-  @Output() formSaved = new EventEmitter<void>(); // Notify parent when saved
-  @Output() formCancelled = new EventEmitter<void>(); // Notify parent if cancelled
+  // --- Inputs/Outputs para comunicarse con el Padre (GestionUsuarios) ---
+  @Input() userIdToEdit: number | null = null; // Si llega algo aquí, es EDITAR
+  @Output() onSave = new EventEmitter<void>(); // Avisar al padre que guardamos
+  @Output() onCancel = new EventEmitter<void>(); // Avisar al padre que cancelamos
 
-  // --- Form Data ---
-  userData: any = { // Replace 'any' with UsuarioRequest if using DTOs
+  // --- Datos del Formulario ---
+  userData: any = {
     username: '',
     nombre: '',
     email: '',
-    password: '', // Password will be required for new, optional for edit
-    rolNombre: 'ROLE_PERSONAL' // Default role
+    password: '', 
+    rolNombre: 'ROLE_PERSONAL' // Valor por defecto
   };
+  
   isEditMode: boolean = false;
   isLoading: boolean = false;
   errorMessage: string = '';
 
-  // Roles available (could fetch from backend later if needed)
+  // Roles disponibles (Deben coincidir con tu BD)
   roles: string[] = ['ROLE_ADMIN', 'ROLE_ENCARGADO', 'ROLE_PERSONAL'];
 
-  constructor(private usuarioService: UsuarioService) {} // Or Usuario
+  constructor(private usuarioService: UsuarioService) {}
 
   ngOnInit(): void {
-    // If an ID was passed, it's edit mode. Fetch user data.
+    // Detectamos si estamos editando o creando
     if (this.userIdToEdit) {
       this.isEditMode = true;
-      this.isLoading = true;
-      this.usuarioService.getUsuario(this.userIdToEdit).subscribe({
-        next: (user) => {
-          // Populate form (don't load password)
-          this.userData = { ...user, password: '' }; // Use spread operator to copy fields
-          this.isLoading = false;
-        },
-        error: (err) => {
-          this.errorMessage = 'Error al cargar datos del usuario.';
-          this.isLoading = false;
-        }
-      });
+      this.cargarDatosUsuario(this.userIdToEdit);
     } else {
       this.isEditMode = false;
+      this.resetForm();
     }
   }
 
-  // --- Save Method ---
+  cargarDatosUsuario(id: number): void {
+    this.isLoading = true;
+    
+    // --- ¡AQUÍ ESTÁ LA CORRECCIÓN! ---
+    // Usamos 'getUsuario' que es como se llama en tu servicio
+    this.usuarioService.getUsuario(id).subscribe({ 
+      next: (user: any) => {
+        // Rellenamos el formulario
+        // IMPORTANTE: Ponemos password vacío para no sobreescribirlo por accidente
+        this.userData = { 
+          ...user, 
+          password: '',
+          rolNombre: user.rolNombre || user.rol // Ajuste por si el backend devuelve objeto o string
+        }; 
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMessage = 'Error al cargar los datos del usuario.';
+        this.isLoading = false;
+      }
+    });
+  }
+
   saveUser(): void {
     this.isLoading = true;
     this.errorMessage = '';
 
-    // Prepare data (remove password if empty during edit)
+    // Copia de datos para no ensuciar el formulario
     let dataToSend = { ...this.userData };
+
+    // Si estamos editando y la contraseña está vacía, la quitamos del envío
+    // (Para que el backend no la cambie a vacío)
     if (this.isEditMode && !dataToSend.password) {
-      delete dataToSend.password; // Don't send empty password on update
+      delete dataToSend.password; 
     }
 
-    // Determine if creating or updating
-    const saveOperation = this.isEditMode
+    // Decidimos si llamar a CREAR o ACTUALIZAR
+    const request = this.isEditMode
       ? this.usuarioService.actualizarUsuario(this.userIdToEdit!, dataToSend)
       : this.usuarioService.crearUsuario(dataToSend);
 
-    saveOperation.subscribe({
+    request.subscribe({
       next: () => {
         this.isLoading = false;
-        this.formSaved.emit(); // Notify parent component
+        this.onSave.emit(); // ¡Éxito! Avisamos al padre
       },
       error: (err) => {
         console.error('Error guardando usuario:', err);
         this.isLoading = false;
+        // Manejo de error bonito
         if (err.error && typeof err.error === 'string') {
           this.errorMessage = err.error;
-        } else if (err.error && typeof err.error === 'object') {
-           const errors = Object.values(err.error).join(', ');
-           this.errorMessage = errors;
+        } else if (err.error && err.error.message) {
+           this.errorMessage = err.error.message;
         } else {
           this.errorMessage = `Error al ${this.isEditMode ? 'actualizar' : 'crear'} el usuario.`;
         }
@@ -92,8 +108,17 @@ export class UsuarioFormComponent implements OnInit { // Implement OnInit
     });
   }
 
-  // --- Cancel Method ---
   cancel(): void {
-    this.formCancelled.emit(); // Notify parent component
+    this.onCancel.emit(); // Avisamos al padre que cierre
+  }
+  
+  private resetForm() {
+      this.userData = {
+        username: '',
+        nombre: '',
+        email: '',
+        password: '',
+        rolNombre: 'ROLE_PERSONAL'
+      };
   }
 }

@@ -1,0 +1,100 @@
+<div class="manual-container">
+  <h2>📞 Nueva Reserva Manual</h2>
+
+  <div *ngIf="successMessage" class="success-backend">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="error-backend">{{ errorMessage }}</div>
+
+  <div class="layout-split">
+    
+    <!-- COLUMNA IZQUIERDA: Datos -->
+    <div class="form-panel">
+      <h3>1. Datos del Cliente</h3>
+      
+      <div class="form-group">
+        <label>Nombre Cliente:</label>
+        <input type="text" [(ngModel)]="nombreCliente" placeholder="Ej: Juan Perez">
+      </div>
+      
+      <div class="form-group">
+        <label>Teléfono:</label>
+        <input type="text" [(ngModel)]="telefonoCliente" placeholder="Ej: 999888777">
+      </div>
+
+      <div class="row">
+        <div class="form-group half">
+          <label>Fecha:</label>
+          <input type="date" [(ngModel)]="fecha" [min]="today">
+        </div>
+        <div class="form-group half">
+          <label>Hora:</label>
+          <input type="time" [(ngModel)]="hora">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Personas:</label>
+        <!-- Al cambiar el número, actualizamos el mapa visualmente -->
+        <input type="number" [(ngModel)]="cantidadPersonas" min="1" (change)="actualizarMapaVisual()">
+      </div>
+
+      <button class="btn-verificar" (click)="verificarDisponibilidad()">
+        {{ isLoading ? 'Verificando...' : '🔍 Ver Mapa de Disponibilidad' }}
+      </button>
+
+      <div class="action-area" *ngIf="mesaSeleccionadaIds.length > 0">
+        <p>Mesas seleccionadas: <strong>{{ mesaSeleccionadaIds.length }}</strong></p>
+        <button class="btn-crear" (click)="crearReservaManual()">
+          ✅ Confirmar Reserva
+        </button>
+      </div>
+    </div>
+
+    <!-- COLUMNA DERECHA: El Mapa (Ahora dividido por salón) -->
+    <div class="mapa-panel">
+      <h3>2. Selección de Mesas</h3>
+      
+      <div *ngIf="!busquedaRealizada" class="placeholder-mapa">
+        <p>Selecciona fecha y hora para ver disponibilidad.</p>
+      </div>
+
+      <div *ngIf="busquedaRealizada" class="salon-layout">
+        
+        <!-- Leyenda -->
+        <div class="leyenda">
+          <span class="dot libre"></span> Libre
+          <span class="dot ocupada"></span> Ocupada
+          <span class="dot seleccionada"></span> Seleccionada
+        </div>
+
+        <div *ngIf="salonesDisponibles.length === 0" class="no-mesas-msg">
+          No hay mesas disponibles con capacidad para {{ cantidadPersonas }} personas.
+        </div>
+
+        <!-- BUCLE POR SALONES -->
+        <div *ngFor="let salon of salonesDisponibles" class="salon-section">
+          
+          <h4 class="titulo-salon">{{ salon }}</h4>
+          
+          <div class="mesas-wrapper">
+            <!-- BUCLE POR MESAS DE ESE SALÓN -->
+            <div *ngFor="let mesa of mesasPorSalon.get(salon)" 
+                 class="mesa-box"
+                 [class.ocupada]="isOcupada(mesa.id)"
+                 [class.seleccionada]="isSelected(mesa.id)"
+                 (click)="toggleMesa(mesa)">
+              
+              <span class="mesa-icon">🪑</span>
+              <span class="mesa-numero">{{ mesa.numeroMesa }}</span>
+              <span class="mesa-cap">{{ mesa.capacidad }}p</span>
+              
+              <div class="overlay" *ngIf="isOcupada(mesa.id)">⛔</div>
+            </div>
+          </div>
+
+        </div> <!-- Fin salon-section -->
+
+      </div>
+    </div>
+
+  </div>
+</div>

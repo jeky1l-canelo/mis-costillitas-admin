@@ -1,49 +1,114 @@
-.sidebar-container {
-  height: 100%; /* Ocupa toda la altura del layout */
+/* Contenedor Principal del Sidebar */
+.sidebar {
+  width: 250px; /* Ancho fijo */
+  height: 100vh; /* Altura completa de la ventana */
+  background-color: #fff;
+  border-right: 1px solid #eee;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Ordenamos los hijos verticalmente */
+  position: fixed; /* Se queda fijo al hacer scroll */
+  left: 0;
+  top: 0;
+  z-index: 100;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.05);
 }
 
-h3 {
+/* --- 1. Header --- */
+.sidebar-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #f0f0f0;
   text-align: center;
-  color: #333;
-  margin-bottom: 30px;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 15px;
+  background-color: #c0392b; /* Fondo rojo marca */
+  color: white;
 }
 
-nav ul {
+.sidebar-header h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: white; /* Forzamos blanco */
+}
+
+.sidebar-header small {
+  opacity: 0.8;
+  font-size: 0.85rem;
+}
+
+/* --- 2. Menú (Cuerpo) --- */
+.sidebar-menu {
   list-style: none;
   padding: 0;
   margin: 0;
+  flex-grow: 1; /* ¡Esto hace que ocupe todo el espacio disponible! */
+  overflow-y: auto; /* Scroll si hay muchos items */
+  padding-top: 1rem;
 }
 
-nav ul li a {
-  display: flex; /* Para alinear ícono y texto */
+.sidebar-menu li a {
+  display: flex;
   align-items: center;
-  padding: 12px 15px;
-  text-decoration: none;
+  padding: 1rem 1.5rem;
   color: #555;
-  border-radius: 4px;
-  margin-bottom: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent; /* Borde invisible para efecto activo */
 }
 
-nav ul li a:hover {
-  background-color: #e9ecef; /* Gris claro al pasar el mouse */
-  color: #007bff;
+.sidebar-menu li a .icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
 }
 
-/* Estilo para el enlace ACTIVO */
-nav ul li a.active-link {
-  background-color: #007bff; /* Azul */
-  color: white;
+/* Hover */
+.sidebar-menu li a:hover {
+  background-color: #fff5f5; /* Rojo muy clarito */
+  color: #c0392b;
+}
+
+/* Activo */
+.sidebar-menu li a.active {
+  background-color: #fff0f0;
+  color: #c0392b;
+  border-left-color: #c0392b; /* Borde rojo a la izquierda */
   font-weight: 600;
 }
 
-/* (Opcional) Estilos para íconos si los añades */
-nav ul li a i {
-  margin-right: 10px; /* Espacio entre ícono y texto */
-  width: 20px; /* Ancho fijo para alineación */
+/* --- 3. Footer (Usuario y Logout) --- */
+.sidebar-footer {
+  padding: 1.5rem;
+  border-top: 1px solid #f0f0f0;
+  background-color: #fdfdfd;
+}
+
+.user-info {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #666;
   text-align: center;
+}
+
+.user-name {
+  display: block;
+  font-weight: bold;
+  color: #333;
+  margin-top: 2px;
+}
+
+.btn-logout {
+  width: 100%;
+  padding: 0.6rem;
+  background-color: white;
+  border: 1px solid #dc3545; /* Borde Rojo */
+  color: #dc3545;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.btn-logout:hover {
+  background-color: #dc3545;
+  color: white;
 }

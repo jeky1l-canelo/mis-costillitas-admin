@@ -1,33 +1,66 @@
-<div class="sidebar-container">
-  <h3>Admin Panel</h3>
-  <nav>
-    <ul>
-      <li>
-        <a routerLink="/dashboard" routerLinkActive="active-link">
-          <i class="icon-dashboard"></i> 
-          Dashboard
-        </a>
-      </li>
-   
-      <li>
-        <a routerLink="/usuarios" routerLinkActive="active-link">
-          <i class="icon-users"></i>
-          Gestionar Usuarios
-        </a>
-      </li>
-      <li>
-        <a routerLink="/mesas" routerLinkActive="active-link">
-          <i class="icon-table"></i>
-          Gestionar Mesas
-        </a>
-      </li>
-      <li>
-        <a routerLink="/reservas" routerLinkActive="active-link">
-          <i class="icon-calendar"></i>
-          Ver Reservas
-        </a>
-      </li>
-      
-    </ul>
-  </nav>
+<div class="sidebar">
+  
+  <!-- 1. Cabecera del Sidebar -->
+  <div class="sidebar-header">
+    <h3>🦁 Admin Panel</h3>
+    <small>Mis Costillitas</small>
+  </div>
+  
+  <!-- 2. Menú de Navegación -->
+  <ul class="sidebar-menu">
+    
+    <!-- DASHBOARD: Visible para todos los del panel -->
+    <li>
+      <a routerLink="/admin/dashboard" routerLinkActive="active">
+        <span class="icon">📊</span> Dashboard
+      </a>
+    </li>
+    
+    <!-- USUARIOS: ¡SOLO ADMIN! -->
+    <!-- El Encargado NO verá este botón -->
+    <li *ngIf="authService.getRole() === 'ROLE_ADMIN'">
+      <a routerLink="/admin/usuarios" routerLinkActive="active">
+        <span class="icon">👥</span> Usuarios
+      </a>
+    </li>
+
+    <!-- PLATOS: ¡SOLO ADMIN! -->
+    <!-- El Encargado NO verá este botón -->
+    <li *ngIf="authService.getRole() === 'ROLE_ADMIN'">
+      <a routerLink="/admin/platos" routerLinkActive="active">
+        <span class="icon">🍽️</span> Platos
+      </a>
+    </li>
+
+    <!-- MESAS: Visible para todos (Admin y Encargado) -->
+    <li>
+      <a routerLink="/admin/mesas" routerLinkActive="active">
+        <span class="icon">🪑</span> Mesas
+      </a>
+    </li>
+
+    <!-- RESERVAS: Visible para todos (Admin y Encargado) -->
+    <li>
+      <a routerLink="/admin/reservas" routerLinkActive="active">
+        <span class="icon">📅</span> Reservas
+      </a>
+    </li>
+  </ul>
+
+  <!-- 3. Footer del Sidebar (Usuario y Logout) -->
+  <div class="sidebar-footer">
+    <div class="user-info">
+      <span class="user-label">Usuario:</span>
+      <span class="user-name">{{ authService.currentUserSignal() || 'Admin' }}</span>
+      <!-- (Opcional) Mostrar el rol para que sepas quién eres -->
+      <small style="color: #888; font-size: 0.7rem;">
+        {{ authService.getRole()?.replace('ROLE_', '') }}
+      </small>
+    </div>
+    
+    <button (click)="logout()" class="btn-logout">
+      🚪 Cerrar Sesión
+    </button>
+  </div>
+
 </div>

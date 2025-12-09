@@ -1,17 +1,26 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router'; // ¡Importa RouterLink!
-import { CommonModule } from '@angular/common'; // Para usar *ngIf (si lo necesitas después)
+import { Component, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Auth } from '../../services/auth'; // Tu servicio de Auth
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [
-    CommonModule, // Añade CommonModule por si acaso
-    RouterLink   // ¡Añade RouterLink!
-  ],
+  imports: [ CommonModule, RouterLink, RouterLinkActive ],
   templateUrl: './sidebar.html',
-  styleUrls: ['./sidebar.css']
+  styleUrl: './sidebar.css'
 })
-export class SidebarComponent { // O SidebarComponent
-  // Por ahora, no necesita lógica extra aquí
+export class SidebarComponent {
+
+  constructor(
+    @Inject(Auth) public authService: Auth, // Público para usarlo en el HTML
+    private router: Router
+  ) {}
+
+  logout(): void {
+    if(confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+      this.authService.logout();
+      this.router.navigate(['/login']);
+    }
+  }
 }

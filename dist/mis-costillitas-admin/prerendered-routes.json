@@ -1,0 +1,13 @@
+{
+  "routes": {
+    "/": {},
+    "/admin": {},
+    "/admin/dashboard": {},
+    "/admin/mesas": {},
+    "/admin/platos": {},
+    "/admin/reserva-manual": {},
+    "/admin/reservas": {},
+    "/admin/usuarios": {},
+    "/login": {}
+  }
+}

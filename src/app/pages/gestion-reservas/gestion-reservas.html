@@ -1,0 +1,107 @@
+<div class="gestion-container">
+  
+  <div class="header-flex">
+    <h2>📅 Gestión de Reservas</h2>
+    
+    <!-- 
+      BOTÓN DE CREAR RESERVA MANUAL 
+      Solo visible para ADMIN y ENCARGADO
+      Lleva a la ruta: /admin/reserva-manual
+    -->
+    <button 
+      *ngIf="authService.getRole() === 'ROLE_ADMIN' || authService.getRole() === 'ROLE_ENCARGADO'"
+      class="btn-crear" 
+      routerLink="/admin/reserva-manual">
+      + Nueva Reserva Manual
+    </button>
+    
+  </div>
+
+  <!-- TABS DE FILTRO -->
+  <div class="tabs-container">
+    <button [class.active]="filtroActual === 'hoy'" (click)="aplicarFiltro('hoy')">
+      🔥 Hoy
+    </button>
+    <button [class.active]="filtroActual === 'proximas'" (click)="aplicarFiltro('proximas')">
+      📅 Próximas
+    </button>
+    <button [class.active]="filtroActual === 'historial'" (click)="aplicarFiltro('historial')">
+      📜 Historial
+    </button>
+    <button [class.active]="filtroActual === 'canceladas'" (click)="aplicarFiltro('canceladas')">
+      ❌ Canceladas
+    </button>
+  </div>
+
+  <!-- TABLA -->
+  <div class="table-responsive" *ngIf="!isLoading">
+    <table class="tabla-admin">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha / Hora</th>
+          <th>Cliente</th>
+          <th>Detalles</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reserva of reservasFiltradas">
+          <td>#{{ reserva.id }}</td>
+          <td>
+            <div class="fecha-dato">
+              {{ reserva.fechaHora | date:'dd/MM/yyyy' }} <br>
+              <strong class="hora-dato">{{ reserva.fechaHora | date:'HH:mm' }}</strong>
+            </div>
+          </td>
+          <td>
+            <!-- Mostramos Nombre (manual) o Email (cliente web) -->
+            <strong>{{ reserva.nombreReserva || reserva.clienteEmail }}</strong> <br>
+            <small>{{ reserva.telefonoReserva }}</small>
+          </td>
+          <td>
+            {{ reserva.cantidadPersonas }} pers.<br>
+            <small *ngFor="let mesa of reserva.mesasAsignadas" class="mesa-badge">M{{ mesa.numeroMesa }}</small>
+          </td>
+          <td>
+            <span class="badge" 
+              [class.confirmada]="reserva.estado === 'Confirmada'"
+              [class.completada]="reserva.estado === 'Completada'"
+              [class.cancelada]="reserva.estado === 'Cancelada'"
+              [class.noshow]="reserva.estado === 'No-Show'">
+              {{ reserva.estado }}
+            </span>
+          </td>
+          <td class="acciones-cell">
+            
+            <!-- Acciones solo para reservas activas -->
+            <div *ngIf="reserva.estado === 'Confirmada'">
+              <button class="btn-icon btn-check" title="Completar (Cliente llegó)" 
+                      (click)="cambiarEstado(reserva, 'Completada')">
+                ✅
+              </button>
+              <button class="btn-icon btn-noshow" title="No-Show (No vino)" 
+                      (click)="cambiarEstado(reserva, 'No-Show')">
+                👻
+              </button>
+              <button class="btn-icon btn-cancel" title="Cancelar" 
+                      (click)="cambiarEstado(reserva, 'Cancelada')">
+                🚫
+              </button>
+            </div>
+
+            <span *ngIf="reserva.estado !== 'Confirmada'" class="texto-gris">-</span>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div *ngIf="reservasFiltradas.length === 0" class="no-data">
+      No hay reservas en esta categoría.
+    </div>
+  </div>
+  
+  <div *ngIf="isLoading" class="loading">Cargando reservas...</div>
+</div>

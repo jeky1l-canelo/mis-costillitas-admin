@@ -1,67 +1,80 @@
 <div class="gestion-usuarios-container">
-  <h2>Gestionar Personal</h2>
-  <!-- {/* Mensajes de éxito/error para borrado */} -->
-<div *ngIf="deleteSuccessMessage" class="success-backend">{{ deleteSuccessMessage }}</div>
+  
+  <h2>Gestión de Personal</h2>
+
+  <!-- Mensajes Generales -->
+  <div *ngIf="generalSuccessMessage" class="success-backend">{{ generalSuccessMessage }}</div>
+  <div *ngIf="deleteSuccessMessage" class="success-backend">{{ deleteSuccessMessage }}</div>
   <div *ngIf="deleteErrorMessage" class="error-backend">{{ deleteErrorMessage }}</div>
-  <div *ngIf="generalSuccessMessage" class="success-backend">
-    {{ generalSuccessMessage }}
-  </div>
-<button class="btn-crear" (click)="openCreateForm()" *ngIf="!showForm">
-    + Crear Nuevo Usuario
-  </button>
-  <!-- FORMULARIO SE MUESTRA  -->
-   <div *ngIf="showForm">
-    <app-usuario-form
-      [userIdToEdit]="userIdToEdit"   
-      (formSaved)="handleFormSaved()"    
-      (formCancelled)="handleFormCancelled()">
-    </app-usuario-form>
-  </div>
-  <!-- Mensaje de Cargando... -->
-  <div *ngIf="isLoading" class="loading">
-    Cargando usuarios... ⏳
+
+  <!-- 
+    BOTÓN CREAR 
+    (Solo se ve si el formulario NO está abierto)
+  -->
+  <div class="actions-bar" *ngIf="!showForm">
+    <button class="btn-crear" (click)="openCreateForm()">
+      + Nuevo Empleado
+    </button>
   </div>
 
-  <!-- Mensaje de Error -->
-  <div *ngIf="errorMessage" class="error-backend">
-    {{ errorMessage }}
+  <!-- 
+    ========================================
+    FORMULARIO REUTILIZABLE (Hijo)
+    ========================================
+    Solo se muestra si showForm es true.
+    [userId]: Le pasamos el ID (input).
+    (onSave): Escuchamos cuando guarde (output).
+    (onCancel): Escuchamos cuando cancele (output).
+  -->
+  <div *ngIf="showForm" class="form-wrapper">
+    <app-usuario-form
+      [userIdToEdit]="userIdToEdit"
+      (onSave)="handleFormSaved()"
+      (onCancel)="handleFormCancelled()">
+    </app-usuario-form>
   </div>
-  <!-- {/* --- Tabla de Usuarios (se oculta si el form está abierto) --- */} -->
-<div *ngIf="!showForm">  
-  <!-- Tabla de Usuarios (si no está cargando y no hay error) -->
-  <table *ngIf="!isLoading && !errorMessage && usuarios.length > 0" class="tabla-usuarios">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>Nombre Completo</th>
-        <th>Email</th>
-        <th>Rol</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- {/* Usamos *ngFor para repetir por cada usuario */} -->
-      <tr *ngFor="let usuario of usuarios">
-        <td>{{ usuario.id }}</td>
-        <td>{{ usuario.username }}</td>
-        <td>{{ usuario.nombre }}</td>
-        <td>{{ usuario.email }}</td>
-        <td>{{ usuario.rolNombre }}</td>
-        <td>
-          <!-- {/* Botones de Editar/Borrar (los conectaremos después) */} -->
-          <button class="btn-editar">Editar</button>
-<button class="btn-borrar" (click)="borrarUsuario(usuario.id, usuario.nombre)">
-            Borrar
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-  <!-- {/* Mensaje si no hay usuarios */} -->
-  <div *ngIf="!isLoading && !errorMessage && usuarios.length === 0" class="no-data">
-    No hay usuarios registrados.
+
+  <!-- 
+    TABLA DE USUARIOS 
+    (Se oculta si estamos editando/creando para no saturar, opcional)
+  -->
+  <div class="table-responsive" *ngIf="!isLoading && !showForm">
+    <table class="tabla-usuarios">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Usuario/Email</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios">
+          <td>{{ usuario.id }}</td>
+          <td>{{ usuario.nombre }}</td>
+          <td>
+            {{ usuario.username }} <br>
+            <small>{{ usuario.email }}</small>
+          </td>
+          <td>
+            <span class="badge-rol">{{ usuario.rolNombre }}</span>
+          </td>
+          <td class="acciones-cell">
+            <!-- BOTÓN EDITAR -->
+            <button class="btn-icon btn-editar" (click)="openEditForm(usuario.id)">
+              ✏️
+            </button>
+            <!-- BOTÓN BORRAR -->
+            <button class="btn-icon btn-borrar" (click)="borrarUsuario(usuario.id, usuario.nombre)">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+  
+  <div *ngIf="isLoading" class="loading">Cargando personal...</div>
 
 </div>

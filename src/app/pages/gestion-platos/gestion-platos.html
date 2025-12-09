@@ -1,0 +1,55 @@
+<div class="gestion-container">
+  <h2>🍽️ Gestión de Menú</h2>
+
+  <div *ngIf="successMessage" class="success-backend">{{ successMessage }}</div>
+
+  <!-- Botón Crear -->
+  <div class="actions-bar" *ngIf="!showForm">
+    <button class="btn-crear" (click)="openCreateForm()">+ Nuevo Plato</button>
+  </div>
+
+  <!-- Formulario Hijo -->
+  <div *ngIf="showForm" class="form-wrapper">
+    <app-plato-form
+      [platoId]="platoIdToEdit"
+      (onSave)="handleFormSaved()"
+      (onCancel)="handleFormCancelled()">
+    </app-plato-form>
+  </div>
+
+  <!-- Tabla -->
+  <div class="table-responsive" *ngIf="!isLoading && !showForm">
+    <table class="tabla-admin">
+      <thead>
+        <tr>
+          <th>Img</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Precio</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let plato of platos">
+          <td>
+            <img [src]="plato.imagenUrl || 'https://placehold.co/50'" class="mini-img">
+          </td>
+          <td>{{ plato.nombre }}</td>
+          <td><span class="badge-cat">{{ plato.categoria }}</span></td>
+          <td>S/ {{ plato.precio }}</td>
+          <td>
+            <!-- Badge Verde si está disponible, Gris si no -->
+            <span [class]="plato.disponible ? 'badge-ok' : 'badge-off'">
+              {{ plato.disponible ? 'Activo' : 'Oculto' }}
+            </span>
+          </td>
+          <td class="acciones-cell">
+            <button class="btn-icon btn-editar" (click)="openEditForm(plato.id)">✏️</button>
+            <button class="btn-icon btn-borrar" (click)="borrarPlato(plato.id)">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

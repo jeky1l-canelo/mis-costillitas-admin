@@ -1,0 +1,153 @@
+/* Contenedor del Formulario */
+.form-container-admin {
+  background-color: #fff;
+  /* No necesita padding extra porque el padre ya tiene, pero aseguramos fondo */
+}
+
+h3 {
+  margin-top: 0;
+  color: #c0392b; /* Rojo marca */
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+/* Grupos de Formulario */
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+/* Inputs, Selects y Textarea */
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: inherit; /* Para que el textarea tenga la misma fuente */
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #c0392b; /* Foco rojo */
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(192, 57, 43, 0.25);
+}
+
+/* Fila de 2 Columnas (Precio y Categoría) */
+.row-2-col {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.row-2-col .form-group {
+  flex: 1; /* Ambos ocupan el mismo ancho */
+}
+
+/* Checkbox "Disponible" */
+.form-group-check {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  border: 1px solid #eee;
+}
+
+.form-group-check label {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.form-group-check input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #28a745; /* Check verde cuando está activo */
+}
+
+/* Vista previa de imagen pequeña */
+img {
+  border: 1px solid #ddd;
+  padding: 2px;
+  background-color: #fff;
+  margin-top: 0.5rem;
+  max-width: 100px; /* Limita el ancho */
+}
+
+/* Botones (Igual que usuarios) */
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.btn-save {
+  background-color: #28a745; /* Verde guardar */
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.btn-save:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+}
+
+.btn-save:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-cancel {
+  background-color: #6c757d; /* Gris cancelar */
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.btn-cancel:hover {
+  background-color: #5a6268;
+  transform: translateY(-1px);
+}
+
+/* Responsive para móvil */
+@media (max-width: 600px) {
+  .row-2-col {
+    flex-direction: column;
+    gap: 0;
+  }
+}

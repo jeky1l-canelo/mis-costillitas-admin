@@ -1,109 +1,139 @@
-/* src/app/components/usuario-form/usuario-form.css */
-
-/* Contenedor del formulario (puedes ajustar padding, etc.) */
+/* Contenedor Principal */
 .usuario-form-container {
-  padding: 25px;
-  background-color: #f9f9f9;
-  border: 1px solid #eee;
+  background-color: #fff;
   border-radius: 8px;
-  font-family: 'Inter', sans-serif; /* Asegura la fuente correcta */
+  /* No le ponemos padding aquí porque ya está dentro de un wrapper con padding */
+  /* Pero aseguramos que el fondo sea blanco */
 }
 
-h3 {
-  text-align: center;
+/* Título del Formulario */
+.form-title {
   margin-top: 0;
-  margin-bottom: 25px;
-  color: #333;
+  color: #c0392b; /* Rojo de la marca */
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
-/* Estructura para cada campo (label + input/select) */
+/* Texto Opcional */
+.optional-text {
+  font-size: 0.85em;
+  color: #888;
+  font-weight: normal;
+  margin-left: 5px;
+}
+
+/* Overlay de Carga */
+.loading-overlay {
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+  font-style: italic;
+  background-color: rgba(255,255,255,0.8);
+}
+
+/* Grupos de Formulario */
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
 }
 
-/* Estilo para las etiquetas */
 .form-group label {
   display: block;
-  margin-bottom: 0.3rem;
-  font-weight: 500;
-  color: #495057;
-  font-size: 0.9em;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.95rem;
 }
 
-/* Estilo para los "casilleros" (campos input y select) */
+/* Inputs y Selects */
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="password"],
 .form-group select {
   width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ced4da; /* Borde gris claro */
-  border-radius: 4px;
-  font-size: 0.9em;
-  font-family: inherit; /* Hereda la fuente del contenedor */
-  line-height: 1.5;
-  background-color: #fff;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-sizing: border-box; /* Importante */
 }
 
-/* Efecto al hacer clic en un campo */
 .form-group input:focus,
 .form-group select:focus {
-  border-color: #80bdff; /* Borde azul */
+  border-color: #c0392b; /* Foco rojo */
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Brillo azul */
+  box-shadow: 0 0 0 0.2rem rgba(192, 57, 43, 0.25); /* Brillo rojo suave */
 }
 
-/* Estilo para mensajes de error debajo de los campos */
+/* Mensajes de Error de Validación */
 .error {
   color: #dc3545;
-  font-size: 0.8em;
-  margin-top: 4px;
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
 }
 
-/* Mensaje de error general del backend */
+/* Mensaje de Error del Backend */
 .error-backend {
-  color: #721c24;
   background-color: #f8d7da;
-  border-color: #f5c6cb;
-  padding: 12px 15px;
-  margin-top: 1rem; /* Espacio arriba */
-  margin-bottom: 1rem; /* Espacio abajo */
-  border: 1px solid transparent;
-  border-radius: 4px;
+  color: #842029;
+  border: 1px solid #f5c6cb;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
-/* Contenedor y estilos para los botones */
+/* Botones */
 .form-buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-end; /* Botones a la derecha */
   gap: 10px;
-  margin-top: 25px;
-  padding-top: 15px;
-  border-top: 1px solid #eee;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f0f0f0;
 }
 
-.form-buttons button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-family: inherit; /* Hereda la fuente */
-}
-
-/* Reutiliza las clases globales si quieres o define btn-save/btn-cancel aquí */
 .btn-save {
-  background-color: #28a745; /* Verde */
+  background-color: #28a745; /* Verde guardar */
   color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px; /* Pill shape */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
 }
-.btn-save:hover { background-color: #218838; }
-.btn-save:disabled { background-color: #a3d9b1; cursor: not-allowed; }
+
+.btn-save:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(40, 167, 69, 0.3);
+}
+
+.btn-save:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
 
 .btn-cancel {
-  background-color: #6c757d; /* Gris */
+  background-color: #6c757d; /* Gris cancelar */
   color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px; /* Pill shape */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
 }
-.btn-cancel:hover { background-color: #5a6268; }
+
+.btn-cancel:hover {
+  background-color: #5a6268;
+  transform: translateY(-1px);
+}

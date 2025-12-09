@@ -1,0 +1,145 @@
+/* Reutiliza estilos base de gestion-platos si quieres, pero aquí hay específicos */
+
+.gestion-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  font-family: 'Poppins', sans-serif;
+}
+
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  color: #333;
+  margin: 0;
+}
+
+/* --- TABS DE FILTRO --- */
+.tabs-container {
+  display: flex;
+  gap: 10px;
+  border-bottom: 2px solid #f0f0f0;
+  margin-bottom: 1.5rem;
+  overflow-x: auto; /* Scroll en móvil */
+}
+
+.tabs-container button {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tabs-container button:hover {
+  color: #c0392b;
+  background-color: #fff5f5;
+}
+
+.tabs-container button.active {
+  color: #c0392b;
+  border-bottom-color: #c0392b;
+}
+
+/* --- TABLA --- */
+.tabla-admin {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.tabla-admin th {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  text-align: left;
+  color: #555;
+  font-weight: 700;
+}
+
+.tabla-admin td {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.fecha-dato {
+  line-height: 1.2;
+}
+.hora-dato {
+  color: #c0392b;
+  font-size: 1.1rem;
+}
+
+.mesa-badge {
+  display: inline-block;
+  background-color: #e9ecef;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-right: 4px;
+  color: #495057;
+}
+
+/* --- BADGES DE ESTADO --- */
+.badge {
+  padding: 0.35rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge.confirmada { background-color: #d1e7dd; color: #0f5132; } /* Verde */
+.badge.completada { background-color: #cff4fc; color: #055160; } /* Azulito */
+.badge.cancelada { background-color: #f8d7da; color: #842029; text-decoration: line-through; } /* Rojo */
+.badge.noshow { background-color: #fff3cd; color: #664d03; } /* Amarillo */
+
+/* --- ACCIONES --- */
+.acciones-cell {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1px solid #eee;
+  background: white;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.btn-icon:hover { transform: scale(1.15); }
+.btn-check:hover { background-color: #d1e7dd; border-color: #badbcc; }
+.btn-noshow:hover { background-color: #fff3cd; border-color: #ffecb5; }
+.btn-cancel:hover { background-color: #f8d7da; border-color: #f5c6cb; }
+
+.texto-gris { color: #ccc; }
+.no-data { text-align: center; padding: 3rem; color: #999; }
+.btn-crear {
+  width: 100%;
+  padding: 1rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+.btn-crear:hover { background-color: #218838; }

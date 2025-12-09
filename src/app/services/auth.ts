@@ -1,92 +1,95 @@
-import { Injectable, Inject, PLATFORM_ID, signal } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable, signal, Inject, PLATFORM_ID } from '@angular/core'; // 1. Importar Inject y PLATFORM_ID
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { jwtDecode } from 'jwt-decode'; // <-- La librería para leer el token
-
-// (Opcional) Define una interfaz para lo que esperamos dentro del token
-interface DecodedToken {
-  sub: string; // "Subject" - este es el username o email que puso el backend
-}
+import { Observable, tap } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common'; // 2. Importar isPlatformBrowser
 
 @Injectable({
   providedIn: 'root'
 })
 export class Auth {
 
-  private apiUrl = 'http://localhost:8080/api/auth';
-  private tokenKey = 'mis_costillitas_token';
-  private isBrowser: boolean;
+  private apiUrl = 'Mis-costillitas-backend-env.eba-pweqgjah.us-east-2.elasticbeanstalk.com/api/auth';
+  private tokenKey = 'token'; 
 
-  // Señal para saber si está logueado (true/false)
   isLoggedInSignal = signal<boolean>(false);
-  // ¡NUEVA SEÑAL para guardar el nombre/email del usuario!
   currentUserSignal = signal<string | null>(null);
+  currentRoleSignal = signal<string | null>(null);
 
   constructor(
     private http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    this.isBrowser = isPlatformBrowser(this.platformId);
-    // Al iniciar la app, revisamos si ya existe un token
-    if (this.isBrowser) {
-      const token = this.getToken();
+    @Inject(PLATFORM_ID) private platformId: Object // 3. Inyectar el ID de la plataforma
+  ) { 
+    this.checkToken();
+  }
+
+  login(credentials: {usernameOrEmail: string, password: string}): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
+      tap(response => {
+        if (response && response.token) {
+          // 4. Solo guardar si estamos en el navegador
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem(this.tokenKey, response.token);
+          }
+          this.processToken(response.token);
+        }
+      })
+    );
+  }
+
+  logout(): void {
+    // 5. Solo borrar si estamos en el navegador
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(this.tokenKey);
+    }
+    this.isLoggedInSignal.set(false);
+    this.currentUserSignal.set(null);
+    this.currentRoleSignal.set(null);
+  }
+
+  private checkToken(): void {
+    // 6. Solo chequear si estamos en el navegador
+    // ¡ESTA ES LA LÍNEA QUE TE ESTABA DANDO ERROR!
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem(this.tokenKey);
       if (token) {
-        this.isLoggedInSignal.set(true);
-        // Si hay token, lo leemos y guardamos el nombre de usuario
-        this.decodeAndStoreUser(token);
+        this.processToken(token);
+      } else {
+        this.logout(); 
       }
     }
   }
 
-  login(credentials: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials);
-  }
-
-  saveToken(token: string): void {
-    if (this.isBrowser) {
-      localStorage.setItem(this.tokenKey, token);
-      // Actualizamos la señal de login
+  private processToken(token: string) {
+    try {
+      const payload = this.decodeToken(token);
+      
       this.isLoggedInSignal.set(true);
-      // Leemos el token que acabamos de guardar y extraemos el nombre
-      this.decodeAndStoreUser(token);
+      this.currentUserSignal.set(payload.sub); 
+      this.currentRoleSignal.set(payload.role || payload.authorities || 'USER');
+      
+    } catch (error) {
+      console.error('Error procesando token:', error);
+      this.logout();
     }
   }
 
+  private decodeToken(token: string): any {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  }
+
   getToken(): string | null {
-    if (this.isBrowser) {
+    if (isPlatformBrowser(this.platformId)) {
       return localStorage.getItem(this.tokenKey);
     }
     return null;
   }
-
-  isLoggedIn(): boolean {
-    // Este método ya casi no lo usaremos, pero es bueno tenerlo
-    return this.isLoggedInSignal();
-  }
-
-  logout(): void {
-    if (this.isBrowser) {
-      localStorage.removeItem(this.tokenKey);
-      // Reseteamos ambas señales
-      this.isLoggedInSignal.set(false);
-      this.currentUserSignal.set(null);
-    }
-  }
-
-  // --- ¡NUEVO MÉTODO PRIVADO! ---
-  /**
-   * Decodifica el token y guarda el 'subject' (username/email) en la señal.
-   */
-  private decodeAndStoreUser(token: string): void {
-    try {
-      const decodedToken: DecodedToken = jwtDecode(token);
-      // Guardamos el 'sub' (subject) como el nombre de usuario actual
-      this.currentUserSignal.set(decodedToken.sub);
-    } catch (error) {
-      console.error("Error decodificando el token:", error);
-      // Si el token es inválido, reseteamos el nombre
-      this.currentUserSignal.set(null);
-    }
+  
+  getRole(): string | null {
+    return this.currentRoleSignal();
   }
 }

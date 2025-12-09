@@ -1,75 +1,92 @@
 <div class="usuario-form-container">
-  <h3>{{ isEditMode ? 'Editar Usuario' : 'Crear Nuevo Usuario' }}</h3>
+  
+  <h3 class="form-title">
+    {{ isEditMode ? '✏️ Editar Usuario' : '➕ Crear Nuevo Usuario' }}
+  </h3>
 
-  <div *ngIf="isLoading && isEditMode">Cargando datos...</div>
+  <div *ngIf="isLoading && isEditMode" class="loading-overlay">
+    Cargando datos...
+  </div>
 
-  <form *ngIf="!isLoading" (ngSubmit)="saveUser()" #userForm="ngForm">
+  <form *ngIf="!isLoading || !isEditMode" (ngSubmit)="saveUser()" #userForm="ngForm">
 
-    <!-- {/* Username */} -->
+    <!-- Username -->
     <div class="form-group">
-      <label for="username">Nombre de Usuario:</label>
-      <input type="text" id="username" name="username" [(ngModel)]="userData.username" required #username="ngModel">
+      <label for="username">Usuario:</label>
+      <input type="text" id="username" name="username" 
+             [(ngModel)]="userData.username" required #username="ngModel"
+             placeholder="Ej: j.perez">
       <div *ngIf="username.invalid && (username.dirty || username.touched)" class="error">
         Nombre de usuario requerido.
       </div>
     </div>
 
-    <!-- {/* Nombre Completo */} -->
+    <!-- Nombre Completo -->
     <div class="form-group">
       <label for="nombre">Nombre Completo:</label>
-      <input type="text" id="nombre" name="nombre" [(ngModel)]="userData.nombre" required #nombre="ngModel">
+      <input type="text" id="nombre" name="nombre" 
+             [(ngModel)]="userData.nombre" required #nombre="ngModel"
+             placeholder="Ej: Juan Perez">
       <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="error">
         Nombre completo requerido.
       </div>
     </div>
 
-    <!-- {/* Email */} -->
+    <!-- Email -->
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" [(ngModel)]="userData.email" required email #email="ngModel">
+      <input type="email" id="email" name="email" 
+             [(ngModel)]="userData.email" required email #email="ngModel"
+             placeholder="juan@miscostillitas.com">
       <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
         <span *ngIf="email.errors?.['required']">Email requerido.</span>
-        <span *ngIf="email.errors?.['email']">Email inválido.</span>
+        <span *ngIf="email.errors?.['email']">Formato inválido.</span>
       </div>
     </div>
 
-    <!-- {/* Password */} -->
+    <!-- Password (Opcional en Edit) -->
     <div class="form-group">
-      <label for="password">Contraseña{{ isEditMode ? ' (dejar en blanco para no cambiar)' : ''}}:</label>
-      <input type="password" id="password" name="password" [(ngModel)]="userData.password" [required]="!isEditMode" minlength="6" #password="ngModel">
-      <div *ngIf="password.invalid && (password.dirty || password.touched) && !isEditMode" class="error">
+      <label for="password">
+        Contraseña:
+        <span *ngIf="isEditMode" class="optional-text">(Dejar vacío para mantener la actual)</span>
+      </label>
+      <input type="password" id="password" name="password" 
+             [(ngModel)]="userData.password" 
+             [required]="!isEditMode" 
+             minlength="6" 
+             #password="ngModel">
+      
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
         <span *ngIf="password.errors?.['required']">Contraseña requerida.</span>
         <span *ngIf="password.errors?.['minlength']">Mínimo 6 caracteres.</span>
       </div>
-       <div *ngIf="password.invalid && password.dirty && isEditMode && password.errors?.['minlength']" class="error">
-         Mínimo 6 caracteres si se cambia.
-      </div>
     </div>
 
-    <!-- {/* Rol */} -->
+    <!-- Rol -->
     <div class="form-group">
       <label for="rol">Rol:</label>
       <select id="rol" name="rol" [(ngModel)]="userData.rolNombre" required #rol="ngModel">
-        <option *ngFor="let r of roles" [value]="r">{{ r.replace('ROLE_', '') }}</option> 
+        <option *ngFor="let r of roles" [value]="r">
+          {{ r.replace('ROLE_', '') }}
+        </option> 
       </select>
-      <div *ngIf="rol.invalid && (rol.dirty || rol.touched)" class="error">
-        Rol requerido.
-      </div>
     </div>
 
-    <!-- {/* Mensaje de Error */} -->
+    <!-- Mensaje de Error -->
     <div *ngIf="errorMessage" class="error-backend">
       {{ errorMessage }}
     </div>
 
-    <!-- {/* Botones */} -->
+    <!-- Botones -->
     <div class="form-buttons">
-      <button type="submit" [disabled]="!userForm.form.valid || isLoading" class="btn-save">
-        {{ isLoading ? 'Guardando...' : (isEditMode ? 'Actualizar Usuario' : 'Crear Usuario') }}
+      <button type="button" (click)="cancel()" class="btn-cancel">
+        Cancelar
       </button>
-      <button type="button" (click)="cancel()" class="btn-cancel">Cancelar</button>
+      
+      <button type="submit" [disabled]="!userForm.form.valid || isLoading" class="btn-save">
+        {{ isLoading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Guardar') }}
+      </button>
     </div>
 
   </form>
 </div>
-

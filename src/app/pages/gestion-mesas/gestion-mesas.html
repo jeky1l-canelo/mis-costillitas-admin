@@ -1,0 +1,90 @@
+<div class="gestion-container">
+  <h2>🪑 Gestión de Mesas</h2>
+
+  <!-- Mensajes -->
+  <div *ngIf="successMessage" class="success-backend">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="error-backend">{{ errorMessage }}</div>
+
+  <!-- 
+    FORMULARIO (SOLO ADMIN) 
+    El Encargado solo ve la tabla, no puede crear/editar.
+  -->
+  <div class="form-panel" *ngIf="isAdmin()">
+    <h3>{{ editandoId ? '✏️ Editar Mesa' : '➕ Nueva Mesa' }}</h3>
+    
+    <div class="form-inline">
+      <div class="form-group small">
+        <label>Nº Mesa</label>
+        <input type="number" [(ngModel)]="nuevaMesa.numeroMesa" placeholder="#">
+      </div>
+      
+      <div class="form-group small">
+        <label>Capacidad</label>
+        <input type="number" [(ngModel)]="nuevaMesa.capacidad" placeholder="Pers.">
+      </div>
+      
+      <div class="form-group medium">
+        <label>Ubicación</label>
+        <select [(ngModel)]="nuevaMesa.ubicacion">
+          <option *ngFor="let u of ubicaciones" [value]="u">{{ u }}</option>
+        </select>
+      </div>
+
+      <div class="form-group small">
+        <label>Estado</label>
+        <select [(ngModel)]="nuevaMesa.estado">
+          <option value="Disponible">Disponible</option>
+          <option value="Mantenimiento">Mantenimiento</option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button (click)="guardarMesa()" class="btn-crear">
+          {{ editandoId ? 'Actualizar' : 'Crear' }}
+        </button>
+        <button *ngIf="editandoId" (click)="cancelarEdicion()" class="btn-cancel">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA DE MESAS -->
+  <div class="table-responsive" *ngIf="!isLoading">
+    <table class="tabla-admin">
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>Ubicación</th>
+          <th>Capacidad</th>
+          <th>Estado</th>
+          <th *ngIf="isAdmin()">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mesa of mesas">
+          <td>
+            <span class="numero-badge">{{ mesa.numeroMesa }}</span>
+          </td>
+          <td>{{ mesa.ubicacion }}</td>
+          <td>{{ mesa.capacidad }} personas</td>
+          <td>
+            <span class="estado-badge" 
+                  [class.ok]="mesa.estado === 'Disponible'"
+                  [class.warn]="mesa.estado === 'Mantenimiento'">
+              {{ mesa.estado }}
+            </span>
+          </td>
+          
+          <!-- Botones solo para ADMIN -->
+          <td class="acciones-cell" *ngIf="isAdmin()">
+            <button class="btn-icon btn-editar" (click)="cargarParaEditar(mesa)">✏️</button>
+            <button class="btn-icon btn-borrar" (click)="borrarMesa(mesa.id)">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">Cargando mesas... ⏳</div>
+</div>
