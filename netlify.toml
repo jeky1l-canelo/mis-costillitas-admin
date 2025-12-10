@@ -1,7 +1,0 @@
-[build]
-  # Esta es la ruta que ya corregiste en Netlify
-  publish = "dist/mis-costillitas-admin/browser"
-
-[[plugins]]
-  package = "@netlify/angular-runtime"
-  disabled = true
