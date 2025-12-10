@@ -8,7 +8,7 @@ import { isPlatformBrowser } from '@angular/common'; // 2. Importar isPlatformBr
 })
 export class Auth {
 
-  private apiUrl = 'Mis-costillitas-backend-env.eba-pweqgjah.us-east-2.elasticbeanstalk.com/api/auth';
+  private apiUrl = 'http://Mis-costillitas-backend-env.eba-pweqgjah.us-east-2.elasticbeanstalk.com/api/auth';
   private tokenKey = 'token'; 
 
   isLoggedInSignal = signal<boolean>(false);

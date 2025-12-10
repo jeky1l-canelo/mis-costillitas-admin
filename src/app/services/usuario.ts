@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class UsuarioService {
 
-  private apiUrl = 'Mis-costillitas-backend-env.eba-pweqgjah.us-east-2.elasticbeanstalk.com/api/usuarios'; // Base URL for users API
+  private apiUrl = 'http://Mis-costillitas-backend-env.eba-pweqgjah.us-east-2.elasticbeanstalk.com/api/usuarios'; // Base URL for users API
 
   constructor(private http: HttpClient) { }
 

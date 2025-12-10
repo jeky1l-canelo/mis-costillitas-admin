@@ -9,7 +9,7 @@ export class MesaService { // (Debería ser MesaService)
 
   // 1. ¡Asegúrate de que esto apunte a /api/mesas!
   // (NO a /api/reservas)
-  private apiUrl = 'Mis-costillitas-backend-env.eba-pweqgjah.us-east-2.elasticbeanstalk.com/api/mesas'; 
+  private apiUrl = 'http://Mis-costillitas-backend-env.eba-pweqgjah.us-east-2.elasticbeanstalk.com/api/mesas'; 
 
   constructor(private http: HttpClient) { }
 

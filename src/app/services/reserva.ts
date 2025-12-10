@@ -12,7 +12,7 @@ export class Reserva {
 
   // --- CAMBIO IMPORTANTE ---
   // URL base limpia, sin '/reservas'
-  private apiUrl = 'Mis-costillitas-backend-env.eba-pweqgjah.us-east-2.elasticbeanstalk.com/api';
+  private apiUrl = 'http://Mis-costillitas-backend-env.eba-pweqgjah.us-east-2.elasticbeanstalk.com/api';
 
   constructor(private http: HttpClient) { }
 

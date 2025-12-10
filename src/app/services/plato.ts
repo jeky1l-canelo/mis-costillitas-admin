@@ -9,7 +9,7 @@ import { Plato } from '../core/models/plato'; // Asegúrate de importar la inter
 export class PlatoService {
 
   // URL base de tu backend (ajusta el puerto si es necesario)
-  private apiUrl = 'Mis-costillitas-backend-env.eba-pweqgjah.us-east-2.elasticbeanstalk.com/api/platos';
+  private apiUrl = 'http://Mis-costillitas-backend-env.eba-pweqgjah.us-east-2.elasticbeanstalk.com/api/platos';
 
   constructor(private http: HttpClient) { }
 
