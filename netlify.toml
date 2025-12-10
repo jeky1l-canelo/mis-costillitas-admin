@@ -1,0 +1,9 @@
+[build]
+  # Esta es la ruta que ya corregiste en Netlify
+  publish = "dist/mis-costillitas-admin/browser"
+
+[[plugins]]
+  # Este es el plugin problemático
+  package = "@netlify/angular-runtime"
+  # Le decimos a Netlify que NO lo use
+  disabled = true
